@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#202820">
+<title>Boss Manok Profit Control</title>
+<style>
+:root{--green:#202820;--green2:#344234;--gold:#e7b94e;--bg:#f4f5f1;--card:#fff;--muted:#697268;--line:#e2e6df;--red:#b42318;--ok:#237a3b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#202820;font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}header{background:var(--green);color:white;padding:18px 16px 14px;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0002}header .brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;width:46px;height:46px;background:var(--gold);color:var(--green);border-radius:13px;font-size:25px}h1{font-size:20px;margin:0}header p{margin:3px 0 0;color:#d8dfd5;font-size:12px}.datebar{display:flex;align-items:center;gap:10px;margin-top:14px}.datebar input{flex:1;background:#fff;color:#222;border:0;border-radius:9px;padding:9px}.wrap{max-width:850px;margin:auto;padding:14px 12px 90px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:var(--green2);color:#fff;padding:15px;border-radius:14px}.metric small{display:block;color:#d4ded0;margin-bottom:6px}.metric strong{font-size:23px;letter-spacing:-.4px}.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.nav button{border:0;background:#e5e8e1;color:#303b30;border-radius:11px;padding:11px 4px;font-weight:650;font-size:13px}.nav button.active{background:var(--gold);color:var(--green)}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}.panel h2{font-size:18px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 14px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:650;color:#3b463a}input,select,textarea{width:100%;min-width:0;border:1px solid #cfd6cb;border-radius:9px;padding:10px;background:#fff;font:inherit;color:#202820}input:focus,textarea:focus{outline:2px solid #e7b94e;border-color:#b58c27}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}.row+.row{border-top:1px solid var(--line)}.muted{color:var(--muted);font-size:13px}.total{font-weight:800;font-size:20px}.btn{border:0;border-radius:10px;padding:12px 14px;background:var(--green);color:white;font-weight:700;width:100%;margin-top:12px}.btn.gold{background:var(--gold);color:var(--green)}.btn.secondary{background:#e8ece5;color:#253125}.btn.danger{background:#fff0ee;color:var(--red);border:1px solid #f0c9c5}.pill{display:inline-block;border-radius:99px;padding:4px 8px;background:#e9efe5;font-size:11px;font-weight:700}.positive{color:var(--ok)}.negative{color:var(--red)}.notice{background:#fff8df;border:1px solid #f0dfa0;border-radius:11px;padding:11px;font-size:13px;margin-top:12px}.history-item{padding:12px 0;border-top:1px solid var(--line)}.history-item:first-child{border-top:0}.history-item strong{display:block}.smallbtn{border:0;background:#edf0e9;padding:7px 10px;border-radius:8px;color:#263326;font-weight:650}.hidden{display:none!important}.foot{font-size:12px;color:var(--muted);text-align:center;padding:18px 4px}.progress{height:8px;background:#e2e6df;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--gold);width:0%}@media(min-width:650px){.nav{grid-template-columns:repeat(6,1fr)}.wrap{padding-top:20px}.metrics{grid-template-columns:repeat(4,1fr)}.metric strong{font-size:20px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">🍗</div><div><h1>BOSS MANOK</h1><p>PROFIT CONTROL CENTER</p></div></div><div class="datebar"><label for="reportDate" style="color:#fff">Report date</label><input id="reportDate" type="date"></div></header>
+<main class="wrap">
+<section class="metrics">
+<div class="metric"><small>Sales</small><strong id="dashSales">₱0.00</strong></div>
+<div class="metric"><small>Estimated profit</small><strong id="dashProfit">₱0.00</strong></div>
+<div class="metric"><small>Recorded costs</small><strong id="dashCosts">₱0.00</strong></div>
+<div class="metric"><small>Profit margin</small><strong id="dashMargin">0.0%</strong></div>
+</section>
+<nav class="nav" aria-label="Main sections">
+<button class="active" data-tab="overview">Overview</button><button data-tab="sales">Sales</button><button data-tab="expenses">Expenses</button><button data-tab="inventory">Inventory</button><button data-tab="cash">Cash flow</button><button data-tab="staff">Staff</button>
+</nav>
+<section id="overview" class="tab">
+<div class="panel"><h2>Daily performance</h2><p class="sub">Numbers update as you enter your records.</p><div class="row"><span>Today's revenue</span><strong id="ovSales">₱0.00</strong></div><div class="row"><span>Today's recorded costs</span><strong id="ovCosts">₱0.00</strong></div><div class="row"><span>Estimated profit</span><strong id="ovProfit" class="total">₱0.00</strong></div><div class="row"><span>Daily profit target</span><strong id="ovTarget">₱1,000.00</strong></div><div class="progress"><span id="targetBar"></span></div><p id="targetText" class="muted">0% of target</p></div>
+<div class="panel"><h2>Quick actions</h2><button class="btn" data-goto="sales">＋ Record today's sales</button><button class="btn secondary" data-goto="expenses">＋ Update costs and expenses</button><button class="btn secondary" data-goto="cash">✓ Reconcile cash drawer</button></div>
+<div class="panel"><h2>Recent saved daily reports</h2><div id="recentReports" class="muted">No reports saved yet.</div></div>
+<div class="panel"><h2>Backup and restore</h2><p class="sub">Your data is stored on this device/browser. Export a backup regularly.</p><button id="exportBtn" class="btn secondary">Export backup (JSON)</button><div class="field full" style="margin-top:12px"><label for="importFile">Restore from backup</label><input type="file" id="importFile" accept=".json,application/json"></div><button id="clearData" class="btn danger">Clear all app data</button></div>
+</section>
+<section id="sales" class="tab hidden">
+<div class="panel"><h2>Daily sales entry</h2><p class="sub">Enter quantities sold. Meal sales include one chicken and one rice; do not record those as separate sales again.</p>
+<div class="fields">
+<div class="field"><label>Chicken-only price (₱)</label><input type="number" min="0" step=".01" id="pChicken" value="40"></div>
+<div class="field"><label>Chicken neck price (₱)</label><input type="number" min="0" step=".01" id="pNeck" value="30"></div>
+<div class="field"><label>Meal price (₱)</label><input type="number" min="0" step=".01" id="pMeal" value="55"></div>
+<div class="field"><label>Rice-only price (₱)</label><input type="number" min="0" step=".01" id="pRice" value="15"></div>
+<div class="field"><label>Chicken-only pieces sold</label><input type="number" min="0" id="qChicken" value="0"></div>
+<div class="field"><label>Necks sold</label><input type="number" min="0" id="qNeck" value="0"></div>
+<div class="field"><label>Meals sold</label><input type="number" min="0" id="qMeal" value="0"></div>
+<div class="field"><label>Rice-only orders</label><input type="number" min="0" id="qRice" value="0"></div>
+<div class="field"><label>₱15 drinks sold</label><input type="number" min="0" id="qDrink15" value="0"></div>
+<div class="field"><label>₱20 drinks sold</label><input type="number" min="0" id="qDrink20" value="0"></div>
+<div class="field"><label>₱25 drinks sold</label><input type="number" min="0" id="qDrink25" value="0"></div>
+<div class="field"><label>Other sales (₱)</label><input type="number" min="0" step=".01" id="otherSales" value="0"></div>
+</div><div class="row" style="margin-top:12px"><span>Calculated sales total</span><strong class="total" id="salesTotal">₱0.00</strong></div><button id="saveSales" class="btn">Save daily sales</button><div id="salesMsg" class="muted" aria-live="polite"></div></div>
+</section>
+<section id="expenses" class="tab hidden">
+<div class="panel"><h2>Food costs and expenses</h2><p class="sub">Edit defaults to match actual daily usage. Do not count purchases and used inventory as the same expense.</p>
+<div class="fields">
+<div class="field"><label>Chicken used (kg)</label><input type="number" min="0" step=".01" id="chickenUsed" value="0"></div>
+<div class="field"><label>Chicken cost per kg (₱)</label><input type="number" min="0" step=".01" id="chickenCostKg" value="150"></div>
+<div class="field"><label>Marinade batch cost (₱)</label><input type="number" min="0" step=".01" id="marinadeBatchCost" value="349"></div>
+<div class="field"><label>Marinade batch covers (kg)</label><input type="number" min=".01" step=".01" id="marinadeKg" value="15"></div>
+<div class="field"><label>Breading used (₱)</label><input type="number" min="0" step=".01" id="breadCost" value="150"></div>
+<div class="field"><label>Gravy used (₱)</label><input type="number" min="0" step=".01" id="gravyCost" value="110"></div>
+<div class="field"><label>Oil allocation (₱)</label><input type="number" min="0" step=".01" id="oilCost" value="66.67"></div>
+<div class="field"><label>Uncooked rice cups used</label><input type="number" min="0" step=".1" id="riceCups" value="25"></div>
+<div class="field"><label>Estimated cost per cup (₱)</label><input type="number" min="0" step=".01" id="riceCupCost" value="7.80"></div>
+<div class="field"><label>Staff wages for this day (₱)</label><input type="number" min="0" step=".01" id="staffWages" value="0"></div>
+<div class="field full"><label>Other expenses (packaging, electricity, transport, rent, etc.) (₱)</label><input type="number" min="0" step=".01" id="otherExpense" value="0"></div>
+</div><div id="costBreakdown"></div><div class="row"><span>Total estimated costs</span><strong class="total" id="expenseTotal">₱0.00</strong></div><div class="row"><span>Estimated profit after costs</span><strong class="total" id="profitTotal">₱0.00</strong></div><button id="saveExpenses" class="btn">Save daily costs</button><div id="expenseMsg" class="muted" aria-live="polite"></div>
+<div class="notice">Rice estimate uses ₱1,300 per 25 kg sack and an assumed 150 g per measuring cup. Confirm your real cup weight. Oil is set to about ₱66.67/day based on ₱200 every three days.</div></div>
+</section>
+<section id="inventory" class="tab hidden">
+<div class="panel"><h2>Chicken inventory</h2><p class="sub">Record physical stock counts using kilograms. This helps spot shortages and waste.</p><div class="fields"><div class="field"><label>Opening stock (kg)</label><input type="number" min="0" step=".01" id="openStock" value="0"></div><div class="field"><label>Purchases received (kg)</label><input type="number" min="0" step=".01" id="stockPurchased" value="0"></div><div class="field full"><label>Closing physical count (kg)</label><input type="number" min="0" step=".01" id="closeStock" value="0"></div></div><div class="row"><span>Available before closing count</span><strong id="stockAvailable">0.00 kg</strong></div><div class="row"><span>Implied stock used</span><strong id="stockUsed">0.00 kg</strong></div><div class="row"><span>Closing stock value (at current chicken cost)</span><strong id="stockValue">₱0.00</strong></div><div id="stockWarning"></div><button id="saveInventory" class="btn">Save inventory count</button></div>
+<div class="panel"><h2>Other stock movements</h2><div class="fields"><div class="field full"><label>Item</label><input id="stockItem" value="Rice" placeholder="e.g. rice, drinks, oil"></div><div class="field"><label>Stock received (units)</label><input type="number" min="0" id="stockIn" value="0"></div><div class="field"><label>Stock used/sold (units)</label><input type="number" min="0" id="stockOut" value="0"></div></div><button id="addStockMove" class="btn secondary">Add movement</button><div id="stockHistory"></div></div>
+</section>
+<section id="cash" class="tab hidden">
+<div class="panel"><h2>Cash flow and drawer count</h2><p class="sub">Cash sales and digital payments should reconcile to recorded sales. Digital payments are not part of the cash drawer.</p><div class="fields">
+<div class="field"><label>Opening cash (₱)</label><input type="number" min="0" step=".01" id="openingCash" value="0"></div>
+<div class="field"><label>Cash sales collected (₱)</label><input type="number" min="0" step=".01" id="cashSales" value="0"></div>
+<div class="field"><label>Digital payments (₱)</label><input type="number" min="0" step=".01" id="digitalSales" value="0"></div>
+<div class="field"><label>Supplier payments made (₱)</label><input type="number" min="0" step=".01" id="supplierPay" value="0"></div>
+<div class="field"><label>Other cash payments (₱)</label><input type="number" min="0" step=".01" id="cashOther" value="0"></div>
+<div class="field"><label>Owner withdrawals (₱)</label><input type="number" min="0" step=".01" id="ownerDraw" value="0"></div>
+<div class="field full"><label>Actual cash counted (₱)</label><input type="number" min="0" step=".01" id="actualCash" value="0"></div></div>
+<div class="row"><span>Expected cash in drawer</span><strong class="total" id="expectedCash">₱0.00</strong></div><div class="row"><span>Cash variance</span><strong id="cashVariance">₱0.00</strong></div><div class="row"><span>Cash + digital collection</span><strong id="cashCollection">₱0.00</strong></div><div class="row"><span>Difference vs recorded sales</span><strong id="salesVariance">₱0.00</strong></div><button id="saveCash" class="btn">Save cash reconciliation</button><div id="cashMsg" class="muted" aria-live="polite"></div></div>
+</section>
+<section id="staff" class="tab hidden">
+<div class="panel"><h2>Staff attendance and pay</h2><p class="sub">Keep daily attendance, agreed rate, and shift handover notes.</p><div class="fields"><div class="field full"><label>Staff name or ID</label><input id="staffName" placeholder="Staff name"></div><div class="field"><label>Days worked</label><input type="number" min="0" step=".5" id="staffDays" value="1"></div><div class="field"><label>Daily rate (₱)</label><input type="number" min="0" step=".01" id="staffRate" value="0"></div><div class="field full"><label>Shift / attendance notes</label><textarea id="staffNote" rows="3" placeholder="Attendance, shift, handover, stock discrepancy..."></textarea></div></div><div class="row"><span>Calculated pay</span><strong class="total" id="staffPay">₱0.00</strong></div><button id="saveStaff" class="btn">Save staff record</button><div id="staffHistory"></div></div>
+</section>
+<p class="foot">Boss Manok Profit Control · Local-device prototype · Export backups regularly</p>
+</main>
+<script>
+const $=id=>document.getElementById(id), num=id=>Math.max(0,Number($(id).value)||0);
+const money=v=>'₱'+(Number(v)||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
+const today=()=> $('reportDate').value;
+const defaults={prices:{pChicken:40,pNeck:30,pMeal:55,pRice:15},expenses:{chickenUsed:0,chickenCostKg:150,marinadeBatchCost:349,marinadeKg:15,breadCost:150,gravyCost:110,oilCost:66.67,riceCups:25,riceCupCost:7.8,staffWages:0,otherExpense:0},inventory:{openStock:0,stockPurchased:0,closeStock:0},cash:{openingCash:0,cashSales:0,digitalSales:0,supplierPay:0,cashOther:0,ownerDraw:0,actualCash:0},sales:{qChicken:0,qNeck:0,qMeal:0,qRice:0,qDrink15:0,qDrink20:0,qDrink25:0,otherSales:0},settings:{target:1000,days:26}};
+let db={daily:{},stockMoves:[],staff:[],settings:defaults.settings};
+try{const raw=localStorage.getItem('bossManokProfitAppV1');if(raw){const loaded=JSON.parse(raw);db={...db,...loaded,daily:loaded.daily||{},stockMoves:loaded.stockMoves||[],staff:loaded.staff||[],settings:{...defaults.settings,...loaded.settings}}}}catch(e){}
+function persist(){try{localStorage.setItem('bossManokProfitAppV1',JSON.stringify(db))}catch(e){alert('Could not save to this browser. Please export a backup.')}} 
+function dayData(){if(!db.daily[today()])db.daily[today()]={sales:{...defaults.sales,...defaults.prices},expenses:{...defaults.expenses},inventory:{...defaults.inventory},cash:{...defaults.cash},saved:{}};let d=db.daily[today()];d.sales={...defaults.sales,...defaults.prices,...d.sales};d.expenses={...defaults.expenses,...d.expenses};d.inventory={...defaults.inventory,...d.inventory};d.cash={...defaults.cash,...d.cash};return d}
+function readFields(ids){let o={};ids.forEach(id=>o[id]=num(id));return o}
+function fillFields(obj,ids){ids.forEach(id=>{if(obj[id]!==undefined)$(id).value=obj[id]})}
+const saleIds=['pChicken','pNeck','pMeal','pRice','qChicken','qNeck','qMeal','qRice','qDrink15','qDrink20','qDrink25','otherSales'];
+const expenseIds=['chickenUsed','chickenCostKg','marinadeBatchCost','marinadeKg','breadCost','gravyCost','oilCost','riceCups','riceCupCost','staffWages','otherExpense'];
+const inventoryIds=['openStock','stockPurchased','closeStock'];
+const cashIds=['openingCash','cashSales','digitalSales','supplierPay','cashOther','ownerDraw','actualCash'];
+function revenue(s){return s.qChicken*s.pChicken+s.qNeck*s.pNeck+s.qMeal*s.pMeal+s.qRice*s.pRice+s.qDrink15*15+s.qDrink20*20+s.qDrink25*25+s.otherSales}
+function costs(e){return e.chickenUsed*e.chickenCostKg+(e.chickenUsed/Math.max(.01,e.marinadeKg))*e.marinadeBatchCost+e.breadCost+e.gravyCost+e.oilCost+e.riceCups*e.riceCupCost+e.staffWages+e.otherExpense}
+function values(d=dayData()){let sales=revenue(d.sales),cost=costs(d.expenses);return{sales,cost,profit:sales-cost,margin:sales?sales?((sales-cost)/sales*100):0:0}}
+function saveCurrent(section){const d=dayData();if(section==='sales')d.sales=readFields(saleIds);if(section==='expenses')d.expenses=readFields(expenseIds);if(section==='inventory')d.inventory=readFields(inventoryIds);if(section==='cash')d.cash=readFields(cashIds);d.saved[section]=new Date().toISOString();persist();render();$(section+'Msg')&&($(section+'Msg').textContent='Saved for '+today()+'.');}
+function render(){
+ const d=dayData(),v=values(d);$('dashSales').textContent=money(v.sales);$('dashCosts').textContent=money(v.cost);$('dashProfit').textContent=money(v.profit);$('dashProfit').className=v.profit<0?'negative':'';$('dashMargin').textContent=v.margin.toFixed(1)+'%';$('ovSales').textContent=money(v.sales);$('ovCosts').textContent=money(v.cost);$('ovProfit').textContent=money(v.profit);$('ovProfit').className='total '+(v.profit<0?'negative':'positive');$('ovTarget').textContent=money(db.settings.target);let pct=Math.max(0,Math.min(100,v.profit/Math.max(1,db.settings.target)*100));$('targetBar').style.width=pct+'%';$('targetText').textContent=pct.toFixed(0)+'% of daily profit target';
+ const s=d.sales,e=d.expenses; $('salesTotal').textContent=money(revenue(s));$('expenseTotal').textContent=money(costs(e));$('profitTotal').textContent=money(v.profit);$('costBreakdown').innerHTML=[['Chicken',e.chickenUsed*e.chickenCostKg],['Marinade allocation',e.chickenUsed/Math.max(.01,e.marinadeKg)*e.marinadeBatchCost],['Breading',e.breadCost],['Gravy',e.gravyCost],['Oil',e.oilCost],['Rice',e.riceCups*e.riceCupCost],['Staff wages',e.staffWages],['Other',e.otherExpense]].map(([k,x])=>`<div class="row"><span>${k}</span><strong>${money(x)}</strong></div>`).join('');
+ const inv=d.inventory,avail=inv.openStock+inv.stockPurchased,used=avail-inv.closeStock;$('stockAvailable').textContent=avail.toFixed(2)+' kg';$('stockUsed').textContent=used.toFixed(2)+' kg';$('stockValue').textContent=money(inv.closeStock*e.chickenCostKg);$('stockWarning').innerHTML=inv.closeStock>avail?'<div class="notice">Closing stock exceeds opening stock plus purchases. Check the physical count.</div>':'';
+ const c=d.cash,expected=c.openingCash+c.cashSales-c.supplierPay-c.cashOther-c.ownerDraw,variance=c.actualCash-expected,collection=c.cashSales+c.digitalSales,salesVariance=collection-v.sales;$('expectedCash').textContent=money(expected);$('cashVariance').textContent=money(variance);$('cashVariance').className=variance===0?'positive':variance<0?'negative':'positive';$('cashCollection').textContent=money(collection);$('salesVariance').textContent=money(salesVariance);$('staffPay').textContent=money(num('staffDays')*num('staffRate'));
+ const reports=Object.entries(db.daily).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);$('recentReports').innerHTML=reports.length?reports.map(([date,x])=>{const z=values(x);return `<div class="history-item"><strong>${date}</strong><div class="row"><span class="muted">Sales ${money(z.sales)}</span><b class="${z.profit<0?'negative':'positive'}">${money(z.profit)} profit</b></div></div>`}).join(''):'No reports saved yet.';
+ $('stockHistory').innerHTML=db.stockMoves.slice().reverse().slice(0,20).map(x=>`<div class="history-item"><strong>${esc(x.item)} <span class="pill">${x.date}</span></strong><span class="muted">Received ${x.in} · Used/sold ${x.out} · Net ${x.in-x.out}</span></div>`).join('');
+ $('staffHistory').innerHTML=db.staff.slice().reverse().slice(0,30).map(x=>`<div class="history-item"><strong>${esc(x.name)} <span class="pill">${x.date}</span></strong><div class="row"><span class="muted">${x.days} day(s) × ${money(x.rate)}</span><b>${money(x.pay)}</b></div>${x.note?`<div class="muted">${esc(x.note)}</div>`:''}</div>`).join('');
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function loadDay(){const d=dayData();fillFields(d.sales,saleIds);fillFields(d.expenses,expenseIds);fillFields(d.inventory,inventoryIds);fillFields(d.cash,cashIds);render()}
+function tab(name){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==name));document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===name));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.goto)));
+$('reportDate').value=new Date().toLocaleDateString('en-CA');$('reportDate').addEventListener('change',loadDay);
+saleIds.concat(expenseIds,inventoryIds,cashIds,['staffDays','staffRate']).forEach(id=>$(id).addEventListener('input',()=>{if(saleIds.includes(id))dayData().sales=readFields(saleIds);if(expenseIds.includes(id))dayData().expenses=readFields(expenseIds);if(inventoryIds.includes(id))dayData().inventory=readFields(inventoryIds);if(cashIds.includes(id))dayData().cash=readFields(cashIds);render()}));
+$('saveSales').onclick=()=>saveCurrent('sales');$('saveExpenses').onclick=()=>saveCurrent('expenses');$('saveInventory').onclick=()=>saveCurrent('inventory');$('saveCash').onclick=()=>saveCurrent('cash');
+$('addStockMove').onclick=()=>{const item=$('stockItem').value.trim();if(!item)return alert('Enter an item name.');db.stockMoves.push({date:today(),item,in:num('stockIn'),out:num('stockOut')});persist();$('stockIn').value=0;$('stockOut').value=0;render()};
+$('saveStaff').onclick=()=>{const name=$('staffName').value.trim();if(!name)return alert('Enter staff name or ID.');db.staff.push({date:today(),name,days:num('staffDays'),rate:num('staffRate'),pay:num('staffDays')*num('staffRate'),note:$('staffNote').value.trim()});persist();$('staffName').value='';$('staffNote').value='';render()};
+$('exportBtn').onclick=()=>{persist();const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='boss-manok-backup-'+today()+'.json';a.click();URL.revokeObjectURL(url)};
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const imported=JSON.parse(await f.text());if(!imported.daily||!imported.settings)throw Error('Invalid backup');if(!confirm('Replace current app data with this backup?'))return;db=imported;persist();loadDay();alert('Backup restored.')}catch(err){alert('Could not restore this backup file.')}}; 
+$('clearData').onclick=()=>{if(confirm('Delete ALL saved Boss Manok app data from this browser? Export a backup first if needed.')){localStorage.removeItem('bossManokProfitAppV1');db={daily:{},stockMoves:[],staff:[],settings:defaults.settings};loadDay()}};
+loadDay();
+</script>
+</body>
+</html>
